@@ -12,8 +12,8 @@ export class ChatService {
   
   constructor() {
     this.supabase = createClient(
-          environment.supabaseUrl,
-          environment.supabaseKey
+          environment.SUPABASE_URL,
+          environment.SUPABASE_KEY
         )
   }
 
