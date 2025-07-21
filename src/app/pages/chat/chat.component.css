@@ -1,28 +1,299 @@
+body {
+    background-color: #23272a; /* Fundo geral similar ao Discord */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
+}
+
+.container {
+    max-width: 900px; /* Limitar largura para melhor visualização */
+}
+
+h3 {
+    color: #ffffff;
+    margin-bottom: 25px !important; /* Espaçamento maior */
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.card {
+    background-color: #2f3136; /* Fundo do card principal */
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    overflow: hidden; /* Garante que o conteúdo respeite o border-radius */
+}
 
 .chat-messages {
     display: flex;
     flex-direction: column;
-    max-height: 800px;
-    overflow-y: scroll
+    max-height: 70vh; /* Altura responsiva, ajustável */
+    overflow-y: scroll;
+    scroll-behavior: smooth; /* Rolagem suave */
+    padding: 15px !important;
+    background-color: #36393f; /* Fundo do chat similar ao Discord */
+    color: #dcddde; /* Cor do texto claro */
+    border-radius: 8px 8px 0 0; /* Cantos arredondados na parte superior */
+}
+
+/* Scrollbar estilizada */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #2f3136;
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #4f545c;
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #6a6e74;
 }
 
 .chat-message-left {
     display: flex;
+    align-items: flex-start; /* Alinha o avatar e a mensagem no topo */
     flex-shrink: 0;
     margin-right: auto;
+    padding-bottom: 20px !important; /* Mais espaçamento entre as mensagens */
+    position: relative;
 }
 
-.py-3 {
-    padding-top: 1rem!important;
-    padding-bottom: 1rem!important;
+.avatar-container {
+    position: relative;
+    margin-right: 15px; /* Espaço entre avatar e mensagem */
+    flex-shrink: 0; /* Evita que o contêiner do avatar encolha */
 }
-.px-4 {
-    padding-right: 1.5rem!important;
-    padding-left: 1.5rem!important;
+
+.avatar-status {
+    border-radius: 50% !important;
+    border: 2px solid #2f3136; /* Borda para destaque e contraste */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
 }
-.flex-grow-0 {
-    flex-grow: 0!important;
+
+.status-indicator {
+    position: absolute;
+    bottom: 0px; /* Ajuste para posicionar corretamente */
+    right: 0px; /* Ajuste para posicionar corretamente */
+    width: 15px; /* Tamanho maior */
+    height: 15px; /* Tamanho maior */
+    border-radius: 50%;
+    border: 3px solid #36393f; /* Cor de fundo do chat para contraste */
+    z-index: 10; /* Garante que fique acima da imagem */
 }
-.border-top {
-    border-top: 1px solid #dee2e6!important;
+
+.status-indicator.online {
+    background-color: #43b581; /* Verde */
+}
+.status-indicator.offline {
+    background-color: #747f8d; /* Cinza */
+}
+.status-indicator.dnd {
+    background-color: #f04747; /* Vermelho */
+}
+.status-indicator.idle {
+    background-color: #faa61a; /* Laranja */
+}
+
+.chat-message-left .flex-shrink-1 {
+    background-color: #40444b; /* Cor da bolha de mensagem para contraste */
+    color: #dcddde;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-left: 0; /* Resetar margem original */
+    max-width: 70%; /* Limitar largura da bolha da mensagem */
+    word-wrap: break-word; /* Quebra de texto */
+    position: relative; /* Para posicionar reações */
+}
+
+.chat-message-left .font-weight-bold {
+    color: #ffffff; /* Nome do usuário mais visível */
+    margin-bottom: 4px;
+    font-size: 1rem;
+}
+
+.text-muted.small.text-nowrap {
+    color: #72767d !important; /* Data e hora mais discretas */
+    font-size: 0.75rem;
+    margin-top: 5px !important; /* Espaçamento */
+    display: block; /* Para ficar em uma nova linha */
+}
+
+.no-chats-message {
+    color: #72767d;
+    text-align: center;
+    padding: 50px;
+    font-size: 1.1rem;
+}
+
+/* Menções */
+.mention {
+    color: #7289da; /* Azul do Discord para menções */
+    font-weight: bold;
+    background-color: rgba(114, 137, 218, 0.2); /* Fundo sutil */
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Reações */
+.message-reactions {
+    margin-top: 8px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap; /* Para quebrar linha se houver muitas reações */
+}
+
+.reaction-button {
+    background-color: #2f3136;
+    border-radius: 5px;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #dcddde;
+    border: 1px solid #40444b; /* Borda sutil */
+    transition: background-color 0.2s ease;
+}
+
+.reaction-button:hover {
+    background-color: #4f545c;
+}
+
+/* Dropdown de opções da mensagem (ex: Delete, Reply) */
+.message-options {
+    color: #72767d;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.message-options:hover {
+    background-color: #40444b;
+}
+
+.dropdown-menu {
+    background-color: #2f3136;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 5px 0;
+}
+
+.dropdown-item {
+    color: #dcddde;
+    padding: 8px 15px;
+    font-size: 0.95rem;
+}
+
+.dropdown-item:hover {
+    background-color: #4f545c;
+    color: #ffffff;
+}
+
+/* Área de input de chat */
+.chat-input-area {
+    background-color: #2f3136; /* Fundo da área de input */
+    padding: 15px 20px !important;
+    border-top: 1px solid #23272a !important; /* Borda mais escura */
+    border-radius: 0 0 8px 8px; /* Cantos arredondados na parte inferior */
+}
+
+.input-group {
+    background-color: #40444b; /* Fundo do input */
+    border-radius: 8px;
+    padding: 5px; /* Espaçamento interno */
+}
+
+.form-control {
+    background-color: #40444b;
+    border: none;
+    color: #dcddde;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1rem;
+    height: auto; /* Ajuste automático da altura */
+    resize: none; /* Desabilita redimensionamento manual */
+}
+
+.form-control::placeholder {
+    color: #72767d;
+}
+
+.form-control:focus {
+    background-color: #4f545c; /* Cor ao focar */
+    box-shadow: none; /* Remove box-shadow padrão */
+    border-color: transparent; /* Remove borda ao focar */
+}
+
+.btn-primary {
+    background-color: #5865f2; /* Azul do Discord para o botão de enviar */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #4752c4;
+}
+
+.btn-primary:disabled {
+    background-color: #4f545c;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-secondary {
+    background-color: #f04747; /* Vermelho para o logout */
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 8px 15px;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #cc3c3c;
+}
+
+/* Pré-visualização de resposta */
+.reply-preview {
+    background-color: #2f3136;
+    border-left: 4px solid #5865f2; /* Barra azul como no Discord */
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: #dcddde;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%; /* Garante que não exceda o input */
+    overflow: hidden; /* Oculta conteúdo extra se muito longo */
+    white-space: nowrap; /* Impede quebra de linha */
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+}
+
+.reply-preview b {
+    color: #ffffff; /* Nome do usuário em negrito */
+}
+
+.clear-reply {
+    cursor: pointer;
+    color: #72767d;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-left: 10px;
+    padding: 0 5px;
+}
+
+.clear-reply:hover {
+    color: #f04747; /* Cor ao passar o mouse */
 }

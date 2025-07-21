@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChatService } from '../../supabase/chat.service';
 import { Ichat } from '../../interface/chat-response';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { DeleteModalComponent } from '../../layout/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [ReactiveFormsModule, DatePipe, DeleteModalComponent],
+  imports: [ReactiveFormsModule, DatePipe, DeleteModalComponent, NgIf],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
@@ -19,7 +19,8 @@ export class ChatComponent {
   private chat_service = inject(ChatService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  chats = signal<Ichat[]>([])
+  chats = signal<Ichat[]>([]);
+  replyingToMessage: Ichat | null = null;
   
   chatForm!: FormGroup;
 
@@ -70,5 +71,20 @@ export class ChatComponent {
   openDropDown(msg: Ichat) {
     console.log(msg);
     this.chat_service.selectedChats(msg);
+  }
+
+  replyToMessage(message: Ichat): void {
+    this.replyingToMessage = message;
+    // Opcional: focar no campo de input após selecionar a resposta
+    // this.chatForm.get('chat_message')?.focus();
+  }
+
+  formatMessage(text: string ): string {
+    // Substitui @nome_do_usuario por um span com destaque
+    return text.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
+}
+
+clearReply(): void {
+    this.replyingToMessage = null; // Define como nulo para ocultar a pré-visualização
   }
 }
