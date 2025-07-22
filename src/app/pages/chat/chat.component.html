@@ -1,15 +1,13 @@
 <main>
-  <div class="container">
-    <h3 class="mb-3">Supa Chat
-      <button (click)="logOut()" class="btn btn-secondary" style="float: right;">Log out</button>
+  <div class="chat-wrapper">
+    <h3>Supa Chat
+      <button (click)="logOut()" class="btn btn-secondary">Log out</button>
     </h3>
     <div class="card">
-      <div>
-        <div class="col-12 col-lg-12 col-xl-12">
-
+      <div class="col-12 col-lg-12 col-xl-12">
+        <div class="chat-messages p-4" #chatMessagesContainer>
           @for (msg of this.chats(); track msg) {
             <div class="position-relative">
-              <div class="chat-messages p-4">
                 <div class="chat-message-left pb-4">
                   <div class="me-5 avatar-container">
                     <img
@@ -33,13 +31,13 @@
                     </ul>
                   </div>
                 </div>
-              </div>
             </div>
           } @empty {
             <div class="no-chats-message">No chats available. Start a conversation!</div>
           }
+        </div>
 
-          <form [formGroup]="chatForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="chatForm" (ngSubmit)="onSubmit()">
             <div class="flex-grow-0 py-3 px-4 border-top chat-input-area">
               <div *ngIf="replyingToMessage" class="reply-preview">
                   Replying to: <b>{{replyingToMessage.users.full_name}}</b>: {{replyingToMessage.text}}
@@ -51,7 +49,6 @@
               </div>
             </div>
           </form>
-        </div>
       </div>
     </div>
   </div>
