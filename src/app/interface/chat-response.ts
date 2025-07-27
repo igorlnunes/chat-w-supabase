@@ -4,6 +4,7 @@ export interface Ichat {
     id: string;
     sender: string;
     text: string;
+    showActions?: boolean;
     users: {
         avatar_url: string;
         id: string;

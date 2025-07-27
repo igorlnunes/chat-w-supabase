@@ -1,76 +1,26 @@
-<!-- ## Database Table Schema -->
-## users table
+# 🤖 Ng-Chat-UI-Setup
 
-* id (uuid)
-* full_name (text)
-* avatar_url (text)
+Este é um projeto de chat em tempo real construído com Angular e Supabase.
 
-## Creating a users table
+## ✨ Principais Recursos
 
-```sql
-CREATE TABLE public.users (
-   id uuid not null references auth.users on delete cascade,
-   full_name text NULL,
-   avatar_url text NULL,
-   primary key (id)
-);
-```
+*   **Chat em Tempo Real:** ⚡️ As mensagens são enviadas e recebidas instantaneamente.
+*   **Autenticação de Usuário:** 🔐 Os usuários podem se inscrever e fazer login com segurança.
+*   **Interface de Usuário Moderna:** 🎨 Uma interface de usuário limpa e moderna construída com Angular.
 
-## Enable Row Level Security
+## 🛠️ Tecnologias Utilizadas
 
-```sql
-ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
-```
+*   **Angular:** 🅰️ Um framework de desenvolvimento de aplicações web.
+*   **Supabase:** ☁️ Uma plataforma de backend de código aberto que fornece banco de dados, autenticação e APIs em tempo real.
+*   **TypeScript:** ⌨️ Um superconjunto de JavaScript que adiciona tipagem estática.
 
-## Permit Users Access Their Profile
+## 🚀 Começando
 
-```sql
-CREATE POLICY "Permit Users to Access Their Profile"
-  ON public.users
-  FOR SELECT
-  USING ( auth.uid() = id );
-```
+1.  **Clone o repositório:** `git clone https://github.com/seu-usuario/ng-chat-ui-setup.git`
+2.  **Instale as dependências:** `npm install`
+3.  **Inicie o servidor de desenvolvimento:** `npm start`
+4.  **Abra em seu navegador:** `http://localhost:4200/`
 
-## Permit Users to Update Their Profile
+## 📄 Licença
 
-```sql
-CREATE POLICY "Permit Users to Update Their Profile"
-  ON public.users
-  FOR UPDATE
-  USING ( auth.uid() = id );
-```
-
-## Supabase Functions
-
-```sql
-CREATE
-OR REPLACE FUNCTION public.user_profile() RETURNS TRIGGER AS $$ BEGIN INSERT INTO public.users (id, full_name,avatar_url)
-VALUES
-  (
-    NEW.id,
-    NEW.raw_user_meta_data ->> 'full_name'::TEXT,
-    NEW.raw_user_meta_data ->> 'avatar_url'::TEXT,
-  );
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-```
-
-## Supabase Trigger
-
-```sql
-  CREATE TRIGGER
-  create_user_trigger
-  AFTER INSERT ON auth.users
-  FOR EACH ROW
-  EXECUTE PROCEDURE
-    public.user_profile();
-```
-
-## Chat_Messages table (Real Time)
-
-* id (uuid)
-* Created At (date)
-* text (text)
-* editable (boolean)
-* sender (uuid)
+Este projeto está licenciado sob a Licença MIT.
