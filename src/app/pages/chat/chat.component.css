@@ -1,334 +1,203 @@
-/* src/app/chat/chat.component.css ou styles.css */
-
-/* Garantir que o html e o body ocupem 100% da altura e largura da viewport */
-
-
-/* Remover o container Bootstrap padrão e fazer o main ocupar toda a tela */
-main {
-    flex-grow: 1;
-    display: flex; /* Habilita flexbox para alinhar o conteúdo */
-    flex-direction: column; /* Conteúdo verticalmente */
-    min-width: 100vw;
-    padding: 10px; /* Adicionar um padding geral para o conteúdo não colar nas bordas da tela */
-    box-sizing: border-box; /* Importante para o padding */
+body {
+  background-color: #101d1a; /* Verde muito escuro para o fundo */
+  color: #e0f2f1; /* Verde muito claro (quase branco) para o texto principal */
+  font-family: 'Noto Sans', 'Segoe UI', sans-serif;
 }
 
-/* Centralizar o conteúdo principal do chat (o "card") */
-.chat-wrapper { /* Novo wrapper para o card, se quiser centralizá-lo */
-    max-width: 100vw; /* Largura máxima para o conteúdo do chat */
-    width: 100%; /* Garante que ocupe a largura total até o max-width */
-    margin: 0 auto;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
-    border-radius: 8px; /* Cantos arredondados */
-    overflow: hidden; /* Garante que o conteúdo respeite o border-radius */
+.chat-wrapper {
+  max-width: 100vw;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #1a2a23; /* Verde escuro para o contêiner principal */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  border: 1px solid #2e4b3f; /* Borda em tom de verde */
+  display: flex;
+  flex-direction: column;
+  color: #b9f6ca; /* Verde claro e brilhante para o título */
+  font-weight: bolder;
 }
 
-
-h3 {
-    color: #ffffff;
-    margin-bottom: 0px !important; /* Remover margem inferior para controle mais preciso */
-    font-size: 1.8rem;
-    font-weight: 600;
-    padding: 15px 20px; /* Adicionar padding para o título */
-    background-color: #2f3136; /* Cor de fundo para o cabeçalho */
-    border-radius: 8px 8px 0 0; /* Cantos arredondados na parte superior */
-    display: flex; /* Habilita flexbox para alinhar título e botão */
-    justify-content: space-between; /* Espaço entre título e botão */
-    align-items: center; /* Alinha verticalmente */
+/* Responsividade extra para telas menores */
+@media (max-width: 768px) {
+  .chat-wrapper {
+    padding: 12px;
+    margin: 20px auto;
+    border-radius: 12px;
+  }
 }
-
-.card { /* O elemento .card em si será o wrapper interno */
-    background-color: #2f3136; /* Fundo do card principal */
-    border: none;
-    /* Remover box-shadow e border-radius daqui, já estão no .chat-wrapper */
-    flex-grow: 1; /* Faz o card preencher o espaço restante no wrapper */
-    display: flex;
-    flex-direction: column;
-    /* Remover overflow: hidden; já está no .chat-wrapper */
-}
-
-/* Posicionar o botão de Log out dentro do cabeçalho */
-.btn-secondary {
-    background-color: #f04747; /* Vermelho para o logout */
-    border: none;
-    border-radius: 5px; /* Ajustar o border-radius para um visual mais compacto */
-    font-weight: bold;
-    padding: 8px 15px;
-    font-size: 0.95rem;
-    transition: background-color 0.2s ease;
-    float: none !important; /* Remover float, já que estamos usando flexbox no h3 */
-}
-
-.btn-secondary:hover {
-    background-color: #cc3c3c;
-}
-
-
-/* O restante do seu CSS permanece o mesmo */
 
 .chat-messages {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Faz as mensagens ocuparem todo o espaço vertical disponível */
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-    padding: 15px !important;
-    background-color: #36393f;
-    color: #ff0026;
-    border-radius: 0; /* Remover border-radius aqui, pois o card/wrapper já tem */
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 8px;
+  background-color: #203a31; /* Fundo da área de mensagens */
 }
 
-/* Scrollbar estilizada */
-.chat-messages::-webkit-scrollbar {
-    width: 8px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-    background: #2f3136;
-    border-radius: 10px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-    background: #4f545c;
-    border-radius: 10px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #6a6e74;
-}
-
+/* Container da mensagem */
 .chat-message-left {
-    display: flex;
-    align-items: flex-start;
-    flex-shrink: 0;
-    margin-right: auto;
-    padding-bottom: 20px !important;
-    position: relative;
-    
+  background-color: #284b3a; /* Verde médio para a bolha da mensagem */
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 18px;
+  color: #e0f2f1; /* Texto principal da mensagem */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: background 0.3s ease;
 }
 
+.chat-message-left:hover {
+  background-color: #3a5f4f; /* Verde mais claro no hover */
+}
+
+/* Avatar e informações */
 .avatar-container {
-    position: relative;
-    margin-right: 15px;
-    flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
-.avatar-status {
-    border-radius: 50% !important;
-    border: 2px solid #2f3136;
-    object-fit: cover;
+.avatar-container img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #3a5f4f;
 }
 
-.status-indicator {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 3px solid #36393f;
-    z-index: 10;
+/* Nome do usuário e bandeira */
+.avatar-container .font-weight-bold {
+  font-size: 15px;
+  font-weight: 600;
+  color: #b9f6ca; /* Verde claro e brilhante para o nome de usuário */
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
+/* Status */
 .status-indicator.online {
-    background-color: #43b581;
-}
-.status-indicator.offline {
-    background-color: #747f8d;
-}
-.status-indicator.dnd {
-    background-color: #f04747;
-}
-.status-indicator.idle {
-    background-color: #faa61a;
+  width: 10px;
+  height: 10px;
+  background-color: #81c784; /* Verde brilhante para status online */
+  border-radius: 50%;
 }
 
-.chat-message-left .flex-shrink-1 {
-    background-color: #40444b;
-    color: #4752c4;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin-left: 0;
-    max-width: 70%;
-    word-wrap: break-word;
-    position: relative;
-}
-
-.chat-message-left .font-weight-bold {
-    color: #3b3b3b;
-    margin-bottom: 4px;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
+/* Data e hora */
 .text-muted.small.text-nowrap {
-    color: #72767d !important;
-    font-size: 0.75rem;
-    margin-top: 5px !important;
-    display: block;
+  font-size: 12px;
+  color: #80cbc4; /* Verde acinzentado para o timestamp */
 }
 
-.no-chats-message {
-    color: #72767d;
-    text-align: center;
-    padding: 50px;
-    font-size: 1.1rem;
+/* Mensagem */
+.text-inner {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-top: 6px;
+  white-space: pre-wrap;
 }
 
-/* Menções */
-.mention {
-    color: #7289da;
-    font-weight: bold;
-    background-color: rgba(114, 137, 218, 0.2);
-    padding: 2px 4px;
-    border-radius: 3px;
-    cursor: pointer;
+/* Indicador de respostas */
+.replies-indicator {
+  font-size: 13px;
+  color: #c8e6c9;
+  margin-top: 8px;
+  padding-left: 4px;
+  border-left: 2px solid #4a7865;
 }
 
 /* Reações */
 .message-reactions {
-    margin-top: 8px;
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #c8e6c9;
 }
 
 .reaction-button {
-    background-color: #2f3136;
-    border-radius: 5px;
-    padding: 3px 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #dcddde;
-    border: 1px solid #40444b;
-    transition: background-color 0.2s ease;
+  background: transparent;
+  color: #b9f6ca; /* Cor dos ícones interativos */
+  border: none;
+  cursor: pointer;
 }
 
-.reaction-button:hover {
-    background-color: #4f545c;
-}
-
-/* Dropdown de opções da mensagem (ex: Delete, Reply) */
+/* Botão de opções */
 .message-options {
-    color: #72767d;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-
-.message-options:hover {
-    background-color: #40444b;
+  color: #b9f6ca; /* Cor dos ícones interativos */
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .dropdown-menu {
-    background-color: #2f3136;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-    padding: 5px 0;
+  background-color: #1b3a2f;
+  border: 1px solid #3a5f4f;
 }
 
 .dropdown-item {
-    color: #dcddde;
-    padding: 8px 15px;
-    font-size: 0.95rem;
+  color: #c8e6c9;
 }
 
 .dropdown-item:hover {
-    background-color: #4f545c;
-    color: #ffffff;
+  background-color: #2a5846;
+  color: #ffffff;
 }
 
-/* Área de input de chat */
+/* Área de input */
 .chat-input-area {
-    background-color: #2f3136;
-    padding: 15px 20px !important;
-    border-top: 1px solid #23272a !important;
-    border-radius: 0 0 8px 8px;
+  background-color: #1b2b25;
+  border-top: 1px solid #3a5f4f;
 }
 
-.input-group {
-    background-color: #40444b;
-    border-radius: 8px;
-    padding: 5px;
+input.form-control {
+  background-color: #101d1a;
+  color: #e0f2f1;
+  border: 1px solid #3a5f4f;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-control {
-    background-color: #40444b;
-    border: none;
-    color: #dcddde;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 1rem;
-    height: auto;
-    resize: none;
+input.form-control:focus {
+  border-color: #26a69a;
+  box-shadow: 0 0 0 0.2rem rgba(38, 166, 154, 0.25);
 }
 
-.form-control::placeholder {
-    color: #72767d;
+input.form-control::placeholder {
+  color: #80cbc4; /* Cor do placeholder, igual ao timestamp */
 }
 
-.form-control:focus {
-    background-color: #4f545c;
-    box-shadow: none;
-    border-color: transparent;
+.chat-input-area .input-group button.btn-primary {
+  background-color: #26a69a; /* Tom de verde/turquesa para o botão de enviar */
+  border: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.btn-primary {
-    background-color: #5865f2;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-weight: bold;
-    transition: background-color 0.2s ease;
+.chat-input-area .input-group button.btn-primary:hover:not(:disabled) {
+  background-color: #2bbbad; /* Verde um pouco mais brilhante no hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra mais pronunciada no hover */
+  transform: translateY(-2px); /* Leve elevação no hover */
 }
 
-.btn-primary:hover {
-    background-color: #4752c4;
+.chat-input-area .input-group button.btn-primary:active:not(:disabled) {
+  transform: translateY(0); /* Remove a elevação ao clicar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Volta para a sombra normal */
 }
 
-.btn-primary:disabled {
-    background-color: #4f545c;
-    cursor: not-allowed;
-    opacity: 0.7;
+.chat-input-area .input-group button.btn-primary:disabled {
+  background-color: #2e4b3f;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
-/* Pré-visualização de resposta */
+/* Preview de resposta */
 .reply-preview {
-    background-color: #2f3136;
-    border-left: 4px solid #5865f2;
-    padding: 8px 12px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    color: #dcddde;
-    font-size: 0.9rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.reply-preview b {
-    color: #ffffff;
+  background-color: #203a31;
+  color: #c8e6c9;
+  padding: 6px 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  font-size: 14px;
 }
 
 .clear-reply {
-    cursor: pointer;
-    color: #72767d;
-    font-weight: bold;
-    font-size: 1rem;
-    margin-left: 10px;
-    padding: 0 5px;
-}
-
-.clear-reply:hover {
-    color: #f04747;
+  color: #a5d6a7;
+  margin-left: 10px;
+  cursor: pointer;
 }

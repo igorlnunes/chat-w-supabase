@@ -59,7 +59,7 @@ export class ChatComponent {
     this.chat_service.listChat().then((res: Ichat[] | null) => {
       console.log(res);
       if(res !== null) {
-        this.chats.set(res)
+        this.chats.set(res.map(chat => ({ ...chat, showActions: false })))
       } else {
         console.log("No messages found.")
       }
@@ -86,5 +86,22 @@ export class ChatComponent {
 
 clearReply(): void {
     this.replyingToMessage = null; // Define como nulo para ocultar a pré-visualização
+  }
+
+  copyMessage(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      // Opcional: adicione um feedback visual para o usuário, como um tooltip ou um toast
+      console.log('Message copied to clipboard');
+    }).catch(err => {
+      console.error('Error copying message: ', err);
+    });
+  }
+
+  showMessageActions(message: Ichat) {
+    message.showActions = true;
+  }
+
+  hideMessageActions(message: Ichat) {
+    message.showActions = false;
   }
 }
